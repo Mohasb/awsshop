@@ -1,5 +1,5 @@
 import 'package:awsshop/models/Product.dart';
-import 'package:awsshop/services/product_service.dart';
+import 'package:awsshop/services/products/product_service.dart';
 import 'package:flutter/material.dart';
 
 class ProductGrid extends StatefulWidget {
@@ -15,7 +15,7 @@ class _ProductGridState extends State<ProductGrid> {
   @override
   void initState() {
     super.initState();
-    futureProducts = fetchProducts();
+    futureProducts = fetchAllProducts();
   }
 
   @override
@@ -72,7 +72,7 @@ class _ProductGridState extends State<ProductGrid> {
             flex: 1,
             child: FadeInImage.assetNetwork(
               placeholder: 'assets/loading.gif',
-              image: product.image ?? '',
+              image: product.imageList?.first ?? '',
               height: 200,
               fit: BoxFit.scaleDown,
               imageErrorBuilder: (context, error, stackTrace) {
@@ -109,7 +109,7 @@ class _ProductGridState extends State<ProductGrid> {
               children: [
                 FadeInImage.assetNetwork(
                   placeholder: 'assets/loading.gif',
-                  image: product.image ?? '',
+                  image: product.imageList?.first ?? '',
                   width: double.infinity,
                   height: 160,
                   fit: BoxFit.scaleDown,

@@ -137,7 +137,7 @@ class _RainbowAppBarState extends State<RainbowAppBar> {
   }
 }
  */
-import 'package:awsshop/components/config/app_customize_state.dart';
+import 'package:awsshop/config/app_customize_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
@@ -181,7 +181,7 @@ class RainbowAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          onPressed: () => {}, // TODO
+          onPressed: () => {}, 
           icon: const Icon(Icons.account_circle_rounded),
           color: textColor,
         ),

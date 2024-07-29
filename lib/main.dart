@@ -1,10 +1,10 @@
-import 'package:awsshop/components/config/app_customize_state.dart';
-import 'package:awsshop/components/product_grid/product_grid.dart';
+import 'package:awsshop/config/app_customize_state.dart';
+import 'package:awsshop/components/landing/landing.dart';
+import 'package:awsshop/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'components/app_bar/app_bar.dart';
 import 'components/app_bar/drawer.dart';
-import 'components/landing/landing.dart';
 
 void main() {
   runApp(
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
               backgroundColor: appBarState.backgroundColor,
               textColor: appBarState.textColor,
             ),
-            body: const ProductGrid(),
+            body: const Landing(),
           );
         },
       ),

@@ -4,7 +4,7 @@ class Product {
   final double? price;
   final String? description;
   final String? glbUrl;
-  final String? image;
+  final List<String>? imageList;
   final int? stock;
   final String? sku;
   final String? status;
@@ -16,7 +16,7 @@ class Product {
     this.price,
     this.description,
     this.glbUrl,
-    this.image,
+    this.imageList,
     this.stock,
     this.sku,
     this.status,
@@ -30,7 +30,7 @@ class Product {
       price: (json['price'] as num?)?.toDouble(),
       description: json['description'] as String?,
       glbUrl: json['glbUrl'] as String?,
-      image: json['image'] as String?,
+      imageList: (json['images'] as List<dynamic>?)?.map((image) => image as String).toList(),
       stock: json['stock'] as int?,
       sku: json['sku'] as String?,
       status: json['status'] as String?,

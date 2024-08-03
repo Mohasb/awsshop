@@ -1,4 +1,4 @@
-import 'package:awsshop/config/app_customize_state.dart';
+import 'package:awsshop/components/customice/app_customize_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

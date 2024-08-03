@@ -1,38 +1,75 @@
+import 'package:awsshop/components/landing/media_Item.dart';
 import 'package:awsshop/models/product.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-class ProductItemLanding extends StatelessWidget {
+class ProductItemLanding extends StatefulWidget {
   final Product product;
 
   const ProductItemLanding({super.key, required this.product});
 
   @override
+  _ProductItemLandingState createState() => _ProductItemLandingState();
+}
+
+class _ProductItemLandingState extends State<ProductItemLanding> {
+  late List<Media> mediaItems;
+  late CarouselController _carouselController;
+  bool _isVideoPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+    mediaItems = widget.product.media ?? [];
+    _carouselController = CarouselController();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Usar LayoutBuilder para obtener el tamaño del contenedor padre
         double containerHeight = constraints.maxHeight;
 
         return Column(
           children: [
-            // Carrusel de imágenes que ocupa el 90% de la altura del contenedor
-            Container(
+            SizedBox(
               height: containerHeight * 0.9,
               child: CarouselSlider(
+                carouselController: _carouselController,
                 options: CarouselOptions(
                   height: double.infinity,
                   aspectRatio: 16 / 9,
                   viewportFraction: 1.0,
                   enlargeCenterPage: false,
-                  autoPlay: true,
+                  autoPlay: !_isVideoPlaying,
                   autoPlayCurve: Curves.easeInOut,
                   autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                  onPageChanged: (index, reason) {
+                    if (mediaItems[index].type == 'VIDEO') {
+                      setState(() {
+                        _isVideoPlaying = true;
+                      });
+                    } else {
+                      setState(() {
+                        _isVideoPlaying = false;
+                      });
+                    }
+                  },
                 ),
-                items: product.imageList?.map((imageUrl) => _buildImageItem(imageUrl)).toList() ?? [],
+                items: mediaItems.map((media) {
+                  return MediaItem(
+                    mediaUrl: media.url!,
+                    isVideo: media.type == 'VIDEO',
+                    onVideoFinish: () {
+                      setState(() {
+                        _isVideoPlaying = false;
+                      });
+                      _carouselController.nextPage();
+                    },
+                  );
+                }).toList(),
               ),
             ),
-            // Información del producto que ocupa el 10% de la altura del contenedor
             Container(
               height: containerHeight * 0.1,
               width: double.infinity,
@@ -41,13 +78,16 @@ class ProductItemLanding extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    product.name ?? 'Nombre del producto',
-                    style: const TextStyle(fontSize: 16),
+                  Expanded(
+                    child: Text(
+                      widget.product.name ?? 'Nombre del producto',
+                      style: const TextStyle(fontSize: 16),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   Text(
-                    product.price != null
-                        ? '\$${product.price!.toStringAsFixed(2)}'
+                    widget.product.price != null
+                        ? '\$${widget.product.price!.toStringAsFixed(2)}'
                         : 'Sin precio',
                     style: const TextStyle(fontSize: 16),
                   ),
@@ -57,18 +97,6 @@ class ProductItemLanding extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-
-  Widget _buildImageItem(String imageUrl) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage(imageUrl),
-          fit: BoxFit.cover,
-        ),
-      ),
     );
   }
 }

@@ -1,22 +1,37 @@
 import 'dart:io';
-import '../../models/constants.dart' as Constants;
+import 'package:device_info_plus/device_info_plus.dart';
+
+import '../../models/constants.dart' as constants;
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-String getUrlByPlatform() {
-  if (Platform.isAndroid) {
-    return Constants.ANDROID_URL;
-  }
-
-  if (Platform.isIOS) {
-    return Constants.IOS_URL;
-  }
-
-  if (Platform.isWindows) {
-    return Constants.ANDROID_URL;
-  }
+Future<String> getUrlByPlatform() async {
+  // Obtenemos la instancia de DeviceInfoPlugin
+  final deviceInfo = DeviceInfoPlugin();
+  String deviceUrl;
 
   if (kIsWeb) {
-    return Constants.WEB_URL;
+    deviceUrl = constants.weburl;
+  } else if (Platform.isAndroid) {
+    final androidInfo = await deviceInfo.androidInfo;
+    // Verificamos si es un emulador Android
+    if (androidInfo.isPhysicalDevice) {
+      deviceUrl = constants.fisicalUrl;
+    } else {
+      deviceUrl = constants.androidUrl;
+    }
+  } else if (Platform.isIOS) {
+    final iosInfo = await deviceInfo.iosInfo;
+    // Verificamos si es un simulador iOS
+    if (iosInfo.isPhysicalDevice) {
+      deviceUrl = constants.iosUrl;
+    } else {
+      deviceUrl = constants.fisicalUrl;
+    }
+  } else if (Platform.isWindows) {
+    deviceUrl = constants.weburl;
+  } else {
+    deviceUrl = constants.androidUrl;
   }
-  return Constants.ANDROID_URL;
+
+  return deviceUrl;
 }

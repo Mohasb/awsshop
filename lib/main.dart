@@ -1,6 +1,5 @@
-import 'package:awsshop/config/app_customize_state.dart';
+import 'package:awsshop/components/customice/app_customize_state.dart';
 import 'package:awsshop/components/landing/landing.dart';
-import 'package:awsshop/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'components/app_bar/app_bar.dart';
@@ -33,9 +32,10 @@ class MyApp extends StatelessWidget {
       home: Consumer<AppcustomizeState>(
         builder: (context, appBarState, child) {
           return Scaffold(
-            appBar: RainbowAppBar(
+            appBar: AwsomeShopAppBar(
               textColor: appBarState.textColor,
               backgroundColor: appBarState.backgroundColor,
+              fontSize: appBarState.fontSize,
               text: appBarState.text,
               isAdmin: true,
             ),
@@ -43,8 +43,33 @@ class MyApp extends StatelessWidget {
               backgroundColor: appBarState.backgroundColor,
               textColor: appBarState.textColor,
             ),
-            body: const Landing(),
+            body: const LandingView(),
           );
+          /* return Scaffold(
+            drawer: FullScreenDrawer(
+              backgroundColor: appBarState.backgroundColor,
+              textColor: appBarState.textColor,
+            ),
+            body: Stack(
+              children: [
+                Positioned.fill(
+                  child: Landing(),
+                ),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: AwsomeShopAppBar(
+                    textColor: appBarState.textColor,
+                    backgroundColor: appBarState.backgroundColor,
+                    text: appBarState.text,
+                    fontSize: appBarState.fontSize,
+                    isAdmin: true,
+                  ),
+                ),
+              ],
+            ),
+          ); */
         },
       ),
     );

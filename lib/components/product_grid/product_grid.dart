@@ -1,4 +1,4 @@
-import 'package:awsshop/models/Product.dart';
+/* import 'package:awsshop/models/product.dart';
 import 'package:awsshop/services/products/product_service.dart';
 import 'package:flutter/material.dart';
 
@@ -139,3 +139,4 @@ class _ProductGridState extends State<ProductGrid> {
     }
   }
 }
+ */

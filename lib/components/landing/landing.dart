@@ -7,10 +7,10 @@ class LandingView extends StatefulWidget {
   const LandingView({super.key});
 
   @override
-  _Landing createState() => _Landing();
+  Landing createState() => Landing();
 }
 
-class _Landing extends State<LandingView> {
+class Landing extends State<LandingView> {
   late Future<List<Product>> futureProducts;
 
   @override

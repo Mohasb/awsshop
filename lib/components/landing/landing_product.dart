@@ -1,4 +1,4 @@
-import 'package:awsshop/components/landing/media_Item.dart';
+import 'package:awsshop/components/landing/media_item.dart';
 import 'package:awsshop/models/product.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +9,10 @@ class ProductItemLanding extends StatefulWidget {
   const ProductItemLanding({super.key, required this.product});
 
   @override
-  _ProductItemLandingState createState() => _ProductItemLandingState();
+  ProductItemLandingState createState() => ProductItemLandingState();
 }
 
-class _ProductItemLandingState extends State<ProductItemLanding> {
+class ProductItemLandingState extends State<ProductItemLanding> {
   late List<Media> mediaItems;
   late CarouselController _carouselController;
   bool _isVideoPlaying = false;

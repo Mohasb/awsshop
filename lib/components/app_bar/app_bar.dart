@@ -1,4 +1,4 @@
-import 'package:awsshop/components/customice/app_customize_view.dart';
+import 'package:awsshop/components/admin/admin_view.dart';
 import 'package:flutter/material.dart';
 
 class AwsomeShopAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -53,7 +53,7 @@ class AwsomeShopAppBar extends StatelessWidget implements PreferredSizeWidget {
             onPressed: () => {
                Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const EditAppBarScreen()),
+                MaterialPageRoute(builder: (context) => const AdminView()),
               )
             },
           ),

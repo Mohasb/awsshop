@@ -15,10 +15,10 @@ class MediaItem extends StatefulWidget {
   });
 
   @override
-  _MediaItemState createState() => _MediaItemState();
+  MediaItemState createState() => MediaItemState();
 }
 
-class _MediaItemState extends State<MediaItem> {
+class MediaItemState extends State<MediaItem> {
   VideoPlayerController? _videoController;
   bool _isInitialized = false;
   bool _isMuted = true;

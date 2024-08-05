@@ -51,7 +51,7 @@ class NavbarCustomizationState extends State<NavbarCustomization> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(4.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -180,6 +180,9 @@ class NavbarCustomizationState extends State<NavbarCustomization> {
                   pickerAreaHeightPercent: 0.8,
                   enableAlpha:
                       false,
+                  displayThumbColor:
+                      true,
+                      hexInputBar: true,
                 ),
               ],
             ),

@@ -63,7 +63,8 @@ class CustomiceTabState extends State<CustomiceTab> {
 
   void _saveChangesDrawer() {
     final appBarState = Provider.of<AppcustomizeState>(context, listen: false);
-    if (_textColorDrawer != null) appBarState.updateDrawerTextColor(_textColorDrawer!);
+    if (_textColorDrawer != null)
+      appBarState.updateDrawerTextColor(_textColorDrawer!);
     if (_backgroundColorDrawer != null) {
       appBarState.updateDrawerBackgroundColor(_backgroundColorDrawer!);
     }
@@ -77,6 +78,7 @@ class CustomiceTabState extends State<CustomiceTab> {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            const SizedBox(height: 20),
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Container(
@@ -95,7 +97,7 @@ class CustomiceTabState extends State<CustomiceTab> {
                 ),
                 child: Theme(
                   data: Theme.of(context).copyWith(
-                    dividerColor: Colors.transparent, 
+                    dividerColor: Colors.transparent,
                   ),
                   child: ExpansionTile(
                     tilePadding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -111,8 +113,10 @@ class CustomiceTabState extends State<CustomiceTab> {
                       ),
                     ),
                     initiallyExpanded: false,
-                    iconColor: Colors.blueAccent, // Color del ícono de expansión
-                    collapsedIconColor: Colors.blueAccent, // Color del ícono de expansión cuando está colapsado
+                    iconColor:
+                        Colors.blueAccent, // Color del ícono de expansión
+                    collapsedIconColor: Colors
+                        .blueAccent, // Color del ícono de expansión cuando está colapsado
                     children: [
                       Container(
                         decoration: BoxDecoration(
@@ -127,7 +131,8 @@ class CustomiceTabState extends State<CustomiceTab> {
                           initialFontSize: _fontSize!,
                           onTextChange: (text) => _text = text,
                           onTextColorChange: (color) => _textColor = color,
-                          onBackgroundColorChange: (color) => _backgroundColor = color,
+                          onBackgroundColorChange: (color) =>
+                              _backgroundColor = color,
                           onFontSizeChange: (size) => _fontSize = size,
                           onSave: _saveChangesNav,
                         ),
@@ -138,6 +143,7 @@ class CustomiceTabState extends State<CustomiceTab> {
               ),
             ),
             ////////////////////////////////////////////////////////////////////////////////////
+            const SizedBox(height: 20),
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Container(
@@ -156,7 +162,7 @@ class CustomiceTabState extends State<CustomiceTab> {
                 ),
                 child: Theme(
                   data: Theme.of(context).copyWith(
-                    dividerColor: Colors.transparent, 
+                    dividerColor: Colors.transparent,
                   ),
                   child: ExpansionTile(
                     tilePadding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -172,19 +178,21 @@ class CustomiceTabState extends State<CustomiceTab> {
                       ),
                     ),
                     initiallyExpanded: false,
-                    iconColor: Colors.blueAccent, 
-                    collapsedIconColor: Colors.blueAccent, 
+                    iconColor: Colors.blueAccent,
+                    collapsedIconColor: Colors.blueAccent,
                     children: [
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: DrawerCustomization(
-                          onTextColorChange: (color) => _textColorDrawer = color,
-                          onBackgroundColorChange: (color) => _backgroundColorDrawer = color,
-                          backgroundColor: _backgroundColorDrawer!, 
+                          onTextColorChange: (color) =>
+                              _textColorDrawer = color,
+                          onBackgroundColorChange: (color) =>
+                              _backgroundColorDrawer = color,
+                          backgroundColor: _backgroundColorDrawer!,
                           textColor: _textColorDrawer!,
-                          onSave: _saveChangesDrawer, 
+                          onSave: _saveChangesDrawer,
                         ),
                       ),
                     ],

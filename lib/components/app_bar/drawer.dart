@@ -11,16 +11,16 @@ class FullScreenDrawer extends StatelessWidget {
 
     return Drawer(
       child: Container(
-        color: appBarState.backgroundColor,
+        color: appBarState.backgroundColorDrawer,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Full Screen Drawer',
+              'Drawer',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
-                color: appBarState.textColor,
+                color: appBarState.textColorDrawer,
               ),
             ),
             // Add more content here

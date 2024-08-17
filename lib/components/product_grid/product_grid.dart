@@ -89,7 +89,7 @@ class _ProductGridState extends State<ProductGrid> {
             child: Container(
                 padding: const EdgeInsets.all(10.0),
                 color: Theme.of(context)
-                    .scaffoldBackgroundColor, // Fondo para el texto
+                    .scaffoldBackgroundColor, 
                 child: Column(
                   children: [
                     Text(product.description ?? '',
@@ -115,7 +115,7 @@ class _ProductGridState extends State<ProductGrid> {
                   fit: BoxFit.scaleDown,
                   imageErrorBuilder: (context, error, stackTrace) {
                     return Image.asset(
-                      'assets/placeholder.png', // Asegúrate de tener esta imagen en tus assets
+                      'assets/placeholder.png', 
                       width: double.infinity,
                       height: 160,
                       fit: BoxFit.scaleDown,

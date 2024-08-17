@@ -56,53 +56,6 @@ class DrawerCustomizationState extends State<DrawerCustomization> {
               ],
             ),
             padding: const EdgeInsets.all(16.0),
-            child: const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                /* TextField(
-                  decoration: const InputDecoration(labelText: 'Texto AppBar'),
-                  controller: widget.textController,
-                  onChanged: (value) {
-                    setState(() {
-                      _text = value;
-                    });
-                    widget.onTextChange(value);
-                  },
-                ),
-                TextField(
-                  decoration:
-                      const InputDecoration(labelText: 'Tamaño de Fuente'),
-                  controller: widget.fontSizeController,
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    double? newSize = double.tryParse(value);
-                    if (newSize != null) {
-                      setState(() {
-                        _fontSize = newSize;
-                      });
-                      widget.onFontSizeChange(newSize);
-                    }
-                  },
-                ), */
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: Colors.grey.shade300),
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

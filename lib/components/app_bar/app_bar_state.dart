@@ -1,5 +1,5 @@
-import 'package:awsshop/models/app_theme_default.dart';
-import 'package:awsshop/models/theme_state.dart';
+import 'package:awsshop/components/admin/customice_tab/theme/app_theme_default.dart';
+import 'package:awsshop/components/admin/customice_tab/theme/theme_state.dart';
 import 'package:flutter/material.dart';
 
 class AppBarState extends ChangeNotifier {
@@ -7,7 +7,7 @@ class AppBarState extends ChangeNotifier {
 
   AppBarState(this.themeState) {
     themeState.addListener(_updateTheme);
-    _updateTheme(); // Inicializa con el tema correcto
+    _updateTheme();
   }
 
   Color _navTextColor = AppTheme.lightTheme['appBarTextColor'] as Color;

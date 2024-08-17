@@ -25,17 +25,14 @@ class Landing extends State<LandingView> {
       future: futureProducts,
       builder: (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          // Muestra un indicador de carga mientras se obtienen los datos
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         } else if (snapshot.hasError) {
-          // Muestra un mensaje de error si algo sale mal
           return Scaffold(
             body: Center(child: Text('Error: ${snapshot.error}')),
           );
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          // Muestra un mensaje si no hay datos
           return const Scaffold(
             body: Center(child: Text('No hay productos disponibles')),
           );

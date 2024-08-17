@@ -39,11 +39,10 @@ class MediaItemState extends State<MediaItem> {
                 if (_videoController!.value.position ==
                     _videoController!.value.duration) {
                   widget
-                      .onVideoFinish(); // Notificar cuando el video ha terminado
+                      .onVideoFinish();
                 }
               });
             }).catchError((error) {
-              // Manejar errores de carga del video aquí
               if (kDebugMode) {
                 print('Error loading video: $error');
               }

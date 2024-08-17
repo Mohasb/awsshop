@@ -23,7 +23,6 @@ class FullScreenDrawer extends StatelessWidget {
                 color: drawerState.textColorDrawer,
               ),
             ),
-            // Add more content here
           ],
         ),
       ),

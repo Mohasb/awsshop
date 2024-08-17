@@ -1,5 +1,5 @@
-import 'package:awsshop/models/app_theme_default.dart';
-import 'package:awsshop/models/theme_state.dart';
+import 'package:awsshop/components/admin/customice_tab/theme/app_theme_default.dart';
+import 'package:awsshop/components/admin/customice_tab/theme/theme_state.dart';
 import 'package:flutter/material.dart';
 
 class BottomBarState extends ChangeNotifier {
@@ -7,10 +7,9 @@ class BottomBarState extends ChangeNotifier {
 
   BottomBarState(this.themeState) {
     themeState.addListener(_updateTheme);
-    _updateTheme(); // Inicializa con el tema correcto
+    _updateTheme(); 
   }
 
-  // Inicializa los colores con los valores del tema
   Color _bgColorBottomBar = AppTheme.lightTheme['bottomBarBgColor'] as Color;
   Color get bgColorBottomBar => _bgColorBottomBar;
 

@@ -5,7 +5,6 @@ import '../../models/constants.dart' as constants;
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 Future<String> getUrlByPlatform() async {
-  // Obtenemos la instancia de DeviceInfoPlugin
   final deviceInfo = DeviceInfoPlugin();
   String deviceUrl;
 
@@ -13,7 +12,6 @@ Future<String> getUrlByPlatform() async {
     deviceUrl = constants.weburl;
   } else if (Platform.isAndroid) {
     final androidInfo = await deviceInfo.androidInfo;
-    // Verificamos si es un emulador Android
     if (androidInfo.isPhysicalDevice) {
       deviceUrl = constants.fisicalUrl;
     } else {
@@ -21,7 +19,6 @@ Future<String> getUrlByPlatform() async {
     }
   } else if (Platform.isIOS) {
     final iosInfo = await deviceInfo.iosInfo;
-    // Verificamos si es un simulador iOS
     if (iosInfo.isPhysicalDevice) {
       deviceUrl = constants.iosUrl;
     } else {

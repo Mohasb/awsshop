@@ -1,9 +1,9 @@
 import 'package:awsshop/components/admin/admin_view.dart';
+import 'package:awsshop/components/admin/customice_tab/theme/theme_state.dart';
 import 'package:awsshop/components/app_bar/app_bar_state.dart';
 import 'package:awsshop/components/botom_bar/botom_bar.dart';
 import 'package:awsshop/components/botom_bar/bottom_bar_state.dart';
 import 'package:awsshop/components/drawer/drawer_state.dart';
-import 'package:awsshop/models/theme_state.dart';
 import 'package:awsshop/services/utils/check_backend.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: Colors.black,
               ),
               drawerTheme: DrawerThemeData(
-                backgroundColor: Colors.grey[850]!,
+                backgroundColor: Colors.grey[800]!,
               ),
               bottomAppBarTheme: const BottomAppBarTheme(
                 color: Colors.black,
@@ -175,7 +175,6 @@ bool _showAdminView = false;
   }
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
-    // Extrayendo las propiedades necesarias del Consumer y pasando a AwsomeShopAppBar
     final appBarState = Provider.of<AppBarState>(context);
 
     return AwsomeShopAppBar(

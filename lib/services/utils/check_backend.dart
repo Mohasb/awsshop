@@ -1,4 +1,3 @@
-// lib/services/backend_service.dart
 import 'package:awsshop/services/utils/get_platfom.dart';
 import 'package:http/http.dart' as http;
 

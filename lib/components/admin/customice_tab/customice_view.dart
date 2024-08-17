@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:awsshop/models/theme_selection.dart';
+import 'package:awsshop/components/admin/customice_tab/theme/theme_selection.dart';
 import 'package:awsshop/components/app_bar/app_bar_state.dart';
 import 'package:awsshop/components/botom_bar/botom_bar_customization.dart';
 import 'package:awsshop/components/botom_bar/bottom_bar_state.dart';
@@ -107,7 +107,7 @@ class CustomiceTabState extends State<CustomiceTab>
 
   void _handleSaveAndClose(ExpansionTileController controller) {
      WidgetsBinding.instance.addPostFrameCallback((_) {
-    controller.collapse(); // Collapse the ExpansionTile
+    controller.collapse(); 
   });
   }
 
@@ -136,7 +136,7 @@ class CustomiceTabState extends State<CustomiceTab>
                   ],
                 ),
                 child: ExpansionTile(
-                  controller: _navController, // Bind the controller
+                  controller: _navController,
                   title: const Text(
                     'Personalización del Navbar',
                     style: TextStyle(
@@ -161,22 +161,22 @@ class CustomiceTabState extends State<CustomiceTab>
                         initialFontSize: _fontSize!,
                         onTextChange: (text) => setState(() {
                           _text = text;
-                          _updateNavChanges(); // Update changes in real-time
+                          _updateNavChanges(); 
                         }),
                         onTextColorChange: (color) => setState(() {
                           _textColor = color;
-                          _updateNavChanges(); // Update changes in real-time
+                          _updateNavChanges(); 
                         }),
                         onBackgroundColorChange: (color) => setState(() {
                           _backgroundColor = color;
-                          _updateNavChanges(); // Update changes in real-time
+                          _updateNavChanges(); 
                         }),
                         onFontSizeChange: (size) => setState(() {
                           _fontSize = size;
-                          _updateNavChanges(); // Update changes in real-time
+                          _updateNavChanges(); 
                         }),
                         onSave: () => _handleSaveAndClose(
-                            _navController), // Simplified save
+                            _navController),
                       ),
                     ),
                   ],
@@ -201,7 +201,7 @@ class CustomiceTabState extends State<CustomiceTab>
                   ],
                 ),
                 child: ExpansionTile(
-                  controller: _drawerController, // Bind the controller
+                  controller: _drawerController,
                   title: const Text(
                     'Personalización del Drawer',
                     style: TextStyle(
@@ -220,16 +220,16 @@ class CustomiceTabState extends State<CustomiceTab>
                       child: DrawerCustomization(
                         onTextColorChange: (color) => setState(() {
                           _textColorDrawer = color;
-                          _updateDrawerChanges(); // Update changes in real-time
+                          _updateDrawerChanges();
                         }),
                         onBackgroundColorChange: (color) => setState(() {
                           _backgroundColorDrawer = color;
-                          _updateDrawerChanges(); // Update changes in real-time
+                          _updateDrawerChanges();
                         }),
                         backgroundColor: _backgroundColorDrawer!,
                         textColor: _textColorDrawer!,
                         onSave: () => _handleSaveAndClose(
-                            _drawerController), // Simplified save
+                            _drawerController), 
                       ),
                     ),
                   ],
@@ -254,7 +254,7 @@ class CustomiceTabState extends State<CustomiceTab>
                   ],
                 ),
                 child: ExpansionTile(
-                  controller: _bottomBarController, // Bind the controller
+                  controller: _bottomBarController, 
                   title: const Text(
                     'Personalización del BotomBar',
                     style: TextStyle(
@@ -273,23 +273,23 @@ class CustomiceTabState extends State<CustomiceTab>
                       child: BotomBarCustomization(
                         onWaterDropColor: (color) => setState(() {
                           _waterDropColor = color;
-                          _updateBotomBarChanges(); // Update changes in real-time
+                          _updateBotomBarChanges(); 
                         }),
                         onBackgroundColorChange: (color) => setState(() {
                           _backgroundColorBotomBar = color;
-                          _updateBotomBarChanges(); // Update changes in real-time
+                          _updateBotomBarChanges(); 
                         }),
                         backgroundColor: _backgroundColorBotomBar!,
                         waterDropColor: _waterDropColor!,
                         onSave: () => _handleSaveAndClose(
-                            _bottomBarController), // Simplified save
+                            _bottomBarController), 
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-            const ThemeSelection() // Asume que esta es la vista de selección de temas
+            const ThemeSelection()
           ],
         ),
       ),

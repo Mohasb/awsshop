@@ -184,7 +184,7 @@ class NavbarCustomizationState extends State<NavbarCustomization> {
           const SizedBox(height: 20),
           Center(
             child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.9, // 80% del ancho
+              width: MediaQuery.of(context).size.width * 0.9, // 90% del ancho
               child: ElevatedButton(
                 onPressed: widget.onSave,
                 style: ElevatedButton.styleFrom(

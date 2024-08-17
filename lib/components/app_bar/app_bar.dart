@@ -38,7 +38,7 @@ class AwsomeShopAppBar extends StatelessWidget implements PreferredSizeWidget {
         icon: const Icon(Icons.menu),
         color: textColor,
         onPressed: () {
-          Scaffold.of(context).openDrawer(); // Open the drawer
+          Scaffold.of(context).openDrawer();
         },
       ),
       actions: [

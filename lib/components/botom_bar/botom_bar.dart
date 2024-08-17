@@ -5,11 +5,15 @@ import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 class BotomBarNavigation extends StatefulWidget {
   final ValueChanged<int> onItemSelected;
   final int selectedIndex;
+  final Color backgroundColorBottomBar;
+  final Color waterDropColorBottomBar;
 
   const BotomBarNavigation({
     super.key,
     required this.onItemSelected,
     required this.selectedIndex,
+    required this.backgroundColorBottomBar,
+    required this.waterDropColorBottomBar,
   });
 
   @override
@@ -23,10 +27,11 @@ class _BotomBarNavigationState extends State<BotomBarNavigation> {
       value: const SystemUiOverlayStyle(
         systemNavigationBarColor: Colors.white,
         systemNavigationBarIconBrightness: Brightness.dark,
-        systemNavigationBarDividerColor: Colors.red, 
+        systemNavigationBarDividerColor: Colors.red,
       ),
       child: WaterDropNavBar(
-        backgroundColor: Colors.white,
+        backgroundColor: widget.backgroundColorBottomBar,
+        waterDropColor: widget.waterDropColorBottomBar,
         onItemSelected: widget.onItemSelected,
         selectedIndex: widget.selectedIndex,
         barItems: [

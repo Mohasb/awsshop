@@ -36,16 +36,12 @@ class NavbarCustomization extends StatefulWidget {
 class NavbarCustomizationState extends State<NavbarCustomization> {
   late Color _textColor;
   late Color _backgroundColor;
-  late String _text;
-  late double _fontSize;
 
   @override
   void initState() {
     super.initState();
     _textColor = widget.initialTextColor;
     _backgroundColor = widget.initialBackgroundColor;
-    _text = widget.initialText;
-    _fontSize = widget.initialFontSize;
   }
 
   @override
@@ -78,7 +74,6 @@ class NavbarCustomizationState extends State<NavbarCustomization> {
                   controller: widget.textController,
                   onChanged: (value) {
                     setState(() {
-                      _text = value;
                     });
                     widget.onTextChange(value);
                   },
@@ -92,7 +87,6 @@ class NavbarCustomizationState extends State<NavbarCustomization> {
                     double? newSize = double.tryParse(value);
                     if (newSize != null) {
                       setState(() {
-                        _fontSize = newSize;
                       });
                       widget.onFontSizeChange(newSize);
                     }

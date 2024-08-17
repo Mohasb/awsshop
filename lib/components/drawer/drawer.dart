@@ -1,4 +1,4 @@
-import 'package:awsshop/components/admin/customice_tab/customize_state.dart';
+import 'package:awsshop/components/drawer/drawer_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,11 +7,11 @@ class FullScreenDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appBarState = Provider.of<AppcustomizeState>(context);
+    final drawerState = Provider.of<DrawerState>(context);
 
     return Drawer(
       child: Container(
-        color: appBarState.backgroundColorDrawer,
+        color: drawerState.backgroundColorDrawer,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -20,7 +20,7 @@ class FullScreenDrawer extends StatelessWidget {
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
-                color: appBarState.textColorDrawer,
+                color: drawerState.textColorDrawer,
               ),
             ),
             // Add more content here

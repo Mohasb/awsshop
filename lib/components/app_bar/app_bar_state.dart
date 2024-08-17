@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class AppcustomizeState extends ChangeNotifier {
+class AppBarState extends ChangeNotifier {
   // Nav
   Color _navTextColor = Colors.black;
-  double  _navFontSize = 30;
+  double _navFontSize = 30;
   Color _navBackgroundColor = Colors.white;
   String _navText = 'Awsshop';
 
@@ -11,9 +11,6 @@ class AppcustomizeState extends ChangeNotifier {
   double get fontSize => _navFontSize;
   Color get backgroundColor => _navBackgroundColor;
   String get text => _navText;
-
-
-
 
   void updateNavTextColor(Color color) {
     _navTextColor = color;
@@ -34,24 +31,4 @@ class AppcustomizeState extends ChangeNotifier {
     _navFontSize = fontsize;
     notifyListeners();
   }
-
-
-  // Drawer
-  Color _textColorDrawer = Colors.black;
-  Color _backgroundColorDrawer = Colors.red;
-
-  Color get textColorDrawer => _textColorDrawer;
-  Color get backgroundColorDrawer => _backgroundColorDrawer;
-
-
-  void updateDrawerTextColor(Color color) {
-    _textColorDrawer = color;
-    notifyListeners();
-  }
-
-  void updateDrawerBackgroundColor(Color color) {
-    _backgroundColorDrawer = color;
-    notifyListeners();
-  }
-
 }

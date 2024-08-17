@@ -19,7 +19,10 @@ String baseUrl = await getUrlByPlatform();
 }
 
 Future<Product> fetchOneProduct() async {
-   final response = await http.get(Uri.parse('${getUrlByPlatform()}/products/1'));
+  
+  String baseUrl = await getUrlByPlatform();
+
+   final response = await http.get(Uri.parse('$baseUrl/products/1'));
 
   if (response.statusCode == 200) {
     final jsonResponse = jsonDecode(response.body);

@@ -1,4 +1,3 @@
-import 'package:awsshop/components/admin/admin_view.dart';
 import 'package:flutter/material.dart';
 
 class AwsomeShopAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -7,6 +6,7 @@ class AwsomeShopAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String text;
   final double fontSize;
   final bool isAdmin;
+  final VoidCallback onAdminIconPressed;
 
   const AwsomeShopAppBar({
     super.key,
@@ -15,6 +15,7 @@ class AwsomeShopAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.text,
     required this.fontSize,
     required this.isAdmin,
+    required this.onAdminIconPressed,
   });
 
   @override
@@ -50,12 +51,7 @@ class AwsomeShopAppBar extends StatelessWidget implements PreferredSizeWidget {
           IconButton(
             icon: const Icon(Icons.edit),
             color: textColor,
-            onPressed: () => {
-               Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AdminView()),
-              )
-            },
+            onPressed: onAdminIconPressed
           ),
         ],
       ],

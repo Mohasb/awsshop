@@ -1,10 +1,10 @@
+import 'package:awsshop/components/admin/admin_view.dart';
 import 'package:awsshop/components/app_bar/app_bar_state.dart';
 import 'package:awsshop/components/botom_bar/botom_bar.dart';
 import 'package:awsshop/components/botom_bar/bottom_bar_state.dart';
 import 'package:awsshop/components/drawer/drawer_state.dart';
 import 'package:awsshop/services/utils/check_backend.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'components/app_bar/app_bar.dart';
@@ -13,8 +13,6 @@ import 'components/landing/landing.dart';
 import 'components/product_grid/product_grid.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
   runApp(
     MultiProvider(
@@ -58,6 +56,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int selectedIndex = 0;
   Future<void>? _backendFuture;
+bool _showAdminView = false;
 
   @override
   void initState() {
@@ -67,6 +66,12 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _fetchDataFromBackend() async {
     await checkBackend();
+  }
+
+  void _toggleAdminView() {
+    setState(() {
+      _showAdminView = !_showAdminView;
+    });
   }
 
   @override
@@ -84,6 +89,9 @@ class _HomePageState extends State<HomePage> {
       body: FutureBuilder<void>(
         future: _backendFuture,
         builder: (context, snapshot) {
+          if (_showAdminView) {
+            return const AdminView(); 
+          }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
@@ -134,6 +142,7 @@ class _HomePageState extends State<HomePage> {
       fontSize: appBarState.fontSize,
       text: appBarState.text,
       isAdmin: true,
+      onAdminIconPressed: _toggleAdminView,
     );
   }
 }

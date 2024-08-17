@@ -1,11 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:awsshop/components/app_bar/app_bar_state.dart';
 import 'package:awsshop/components/botom_bar/botom_bar_customization.dart';
 import 'package:awsshop/components/botom_bar/bottom_bar_state.dart';
 import 'package:awsshop/components/drawer/drawer_customization.dart';
 import 'package:awsshop/components/app_bar/nav_constumization.dart';
 import 'package:awsshop/components/drawer/drawer_state.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class CustomiceTab extends StatefulWidget {
   const CustomiceTab({super.key});
@@ -14,7 +14,7 @@ class CustomiceTab extends StatefulWidget {
   CustomiceTabState createState() => CustomiceTabState();
 }
 
-class CustomiceTabState extends State<CustomiceTab> {
+class CustomiceTabState extends State<CustomiceTab> with SingleTickerProviderStateMixin {
   late TextEditingController textController;
   late TextEditingController fontSizeController;
 
@@ -23,12 +23,18 @@ class CustomiceTabState extends State<CustomiceTab> {
   Color? _backgroundColor;
   String? _text;
   double? _fontSize;
+
   // Drawer
   Color? _textColorDrawer;
   Color? _backgroundColorDrawer;
-  // BotomBAr
+
+  // BotomBar
   Color? _waterDropColor;
   Color? _backgroundColorBotomBar;
+
+  late final ExpansionTileController _navController;
+  late final ExpansionTileController _drawerController;
+  late final ExpansionTileController _bottomBarController;
 
   @override
   void initState() {
@@ -54,6 +60,10 @@ class CustomiceTabState extends State<CustomiceTab> {
     _waterDropColor = botomBarState.colorWaterDropBottomBar;
     _backgroundColorBotomBar = botomBarState.bgColorBottomBar;
 
+    // Initialize controllers
+    _navController = ExpansionTileController();
+    _drawerController = ExpansionTileController();
+    _bottomBarController = ExpansionTileController();
   }
 
   @override
@@ -63,7 +73,7 @@ class CustomiceTabState extends State<CustomiceTab> {
     super.dispose();
   }
 
-  void _saveChangesNav() {
+  void _updateNavChanges() {
     final appBarState = Provider.of<AppBarState>(context, listen: false);
     if (_text != null) appBarState.updateNavText(_text!);
     if (_textColor != null) appBarState.updateNavTextColor(_textColor!);
@@ -71,10 +81,9 @@ class CustomiceTabState extends State<CustomiceTab> {
       appBarState.updateNavBackgroundColor(_backgroundColor!);
     }
     if (_fontSize != null) appBarState.updateNavFontSize(_fontSize!);
-    Navigator.of(context).pop();
   }
 
-  void _saveChangesDrawer() {
+  void _updateDrawerChanges() {
     final drawerState = Provider.of<DrawerState>(context, listen: false);
     if (_textColorDrawer != null) {
       drawerState.updateDrawerTextColor(_textColorDrawer!);
@@ -82,19 +91,21 @@ class CustomiceTabState extends State<CustomiceTab> {
     if (_backgroundColorDrawer != null) {
       drawerState.updateDrawerBackgroundColor(_backgroundColorDrawer!);
     }
-    Navigator.of(context).pop();
   }
 
-  void _saveChangesBotomBar() {
+  void _updateBotomBarChanges() {
     final botomBarState = Provider.of<BottomBarState>(context, listen: false);
-
     if (_waterDropColor != null) {
       botomBarState.updatecolorWaterDropBottomBar(_waterDropColor!);
     }
     if (_backgroundColorBotomBar != null) {
       botomBarState.updateBgColorBottomBar(_backgroundColorBotomBar!);
     }
-    Navigator.of(context).pop();
+  }
+
+  void _handleSaveAndClose(ExpansionTileController controller) {
+    _updateNavChanges(); // Update state
+    controller.collapse(); // Collapse the ExpansionTile
   }
 
   @override
@@ -109,7 +120,7 @@ class CustomiceTabState extends State<CustomiceTab> {
               borderRadius: BorderRadius.circular(10),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey[200], // Fondo del contenedor
+                  color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: Colors.black, width: 2),
                   boxShadow: [
@@ -121,60 +132,59 @@ class CustomiceTabState extends State<CustomiceTab> {
                     ),
                   ],
                 ),
-                child: Theme(
-                  data: Theme.of(context).copyWith(
-                    dividerColor: Colors.transparent,
-                  ),
-                  child: ExpansionTile(
-                    tilePadding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                child: ExpansionTile(
+                  controller: _navController,
+                  title: const Text(
+                    'Personalización del Navbar',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
-                    title: const Text(
-                      'Personalización del Navbar',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                  ),
+                  iconColor: Colors.blueAccent,
+                  collapsedIconColor: Colors.blueAccent,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: NavbarCustomization(
+                        textController: textController,
+                        fontSizeController: fontSizeController,
+                        initialTextColor: _textColor!,
+                        initialBackgroundColor: _backgroundColor!,
+                        initialText: _text!,
+                        initialFontSize: _fontSize!,
+                        onTextChange: (text) => setState(() {
+                          _text = text;
+                          _updateNavChanges(); // Update changes in real-time
+                        }),
+                        onTextColorChange: (color) => setState(() {
+                          _textColor = color;
+                          _updateNavChanges(); // Update changes in real-time
+                        }),
+                        onBackgroundColorChange: (color) => setState(() {
+                          _backgroundColor = color;
+                          _updateNavChanges(); // Update changes in real-time
+                        }),
+                        onFontSizeChange: (size) => setState(() {
+                          _fontSize = size;
+                          _updateNavChanges(); // Update changes in real-time
+                        }),
+                        onSave: () => _handleSaveAndClose(_navController),
                       ),
                     ),
-                    initiallyExpanded: false,
-                    iconColor:
-                        Colors.blueAccent, // Color del ícono de expansión
-                    collapsedIconColor: Colors
-                        .blueAccent, // Color del ícono de expansión cuando está colapsado
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: NavbarCustomization(
-                          textController: textController,
-                          fontSizeController: fontSizeController,
-                          initialTextColor: _textColor!,
-                          initialBackgroundColor: _backgroundColor!,
-                          initialText: _text!,
-                          initialFontSize: _fontSize!,
-                          onTextChange: (text) => _text = text,
-                          onTextColorChange: (color) => _textColor = color,
-                          onBackgroundColorChange: (color) =>
-                              _backgroundColor = color,
-                          onFontSizeChange: (size) => _fontSize = size,
-                          onSave: _saveChangesNav,
-                        ),
-                      ),
-                    ],
-                  ),
+                  ],
                 ),
               ),
             ),
-            ////////////////////////////////////////////////////////////////////////////////////
             const SizedBox(height: 20),
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey[200], // Fondo del contenedor
+                  color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: Colors.black, width: 2),
                   boxShadow: [
@@ -186,53 +196,47 @@ class CustomiceTabState extends State<CustomiceTab> {
                     ),
                   ],
                 ),
-                child: Theme(
-                  data: Theme.of(context).copyWith(
-                    dividerColor: Colors.transparent,
-                  ),
-                  child: ExpansionTile(
-                    tilePadding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                child: ExpansionTile(
+                  controller: _drawerController,
+                  title: const Text(
+                    'Personalización del Drawer',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
-                    title: const Text(
-                      'Personalización del Drawer',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                  ),
+                  iconColor: Colors.blueAccent,
+                  collapsedIconColor: Colors.blueAccent,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: DrawerCustomization(
+                        onTextColorChange: (color) => setState(() {
+                          _textColorDrawer = color;
+                          _updateDrawerChanges(); // Update changes in real-time
+                        }),
+                        onBackgroundColorChange: (color) => setState(() {
+                          _backgroundColorDrawer = color;
+                          _updateDrawerChanges(); // Update changes in real-time
+                        }),
+                        backgroundColor: _backgroundColorDrawer!,
+                        textColor: _textColorDrawer!,
+                        onSave: () => _handleSaveAndClose(_drawerController),
                       ),
                     ),
-                    initiallyExpanded: false,
-                    iconColor: Colors.blueAccent,
-                    collapsedIconColor: Colors.blueAccent,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: DrawerCustomization(
-                          onTextColorChange: (color) =>
-                              _textColorDrawer = color,
-                          onBackgroundColorChange: (color) =>
-                              _backgroundColorDrawer = color,
-                          backgroundColor: _backgroundColorDrawer!,
-                          textColor: _textColorDrawer!,
-                          onSave: _saveChangesDrawer,
-                        ),
-                      ),
-                    ],
-                  ),
+                  ],
                 ),
               ),
             ),
-            ////////////////////////////BOTOMBAR////////////////////////////////////////////////////////
             const SizedBox(height: 20),
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey[200], // Fondo del contenedor
+                  color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: Colors.black, width: 2),
                   boxShadow: [
@@ -244,43 +248,38 @@ class CustomiceTabState extends State<CustomiceTab> {
                     ),
                   ],
                 ),
-                child: Theme(
-                  data: Theme.of(context).copyWith(
-                    dividerColor: Colors.transparent,
-                  ),
-                  child: ExpansionTile(
-                    tilePadding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                child: ExpansionTile(
+                  controller: _bottomBarController,
+                  title: const Text(
+                    'Personalización del BotomBar',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
-                    title: const Text(
-                      'Personalización del BotomBar',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                  ),
+                  iconColor: Colors.blueAccent,
+                  collapsedIconColor: Colors.blueAccent,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: BotomBarCustomization(
+                        onWaterDropColor: (color) => setState(() {
+                          _waterDropColor = color;
+                          _updateBotomBarChanges(); // Update changes in real-time
+                        }),
+                        onBackgroundColorChange: (color) => setState(() {
+                          _backgroundColorBotomBar = color;
+                          _updateBotomBarChanges(); // Update changes in real-time
+                        }),
+                        backgroundColor: _backgroundColorBotomBar!,
+                        waterDropColor: _waterDropColor!,
+                        onSave: () => _handleSaveAndClose(_bottomBarController),
                       ),
                     ),
-                    initiallyExpanded: false,
-                    iconColor: Colors.blueAccent,
-                    collapsedIconColor: Colors.blueAccent,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: BotomBarCustomization(
-                          onWaterDropColor: (color) =>
-                              _waterDropColor = color,
-                          onBackgroundColorChange: (color) =>
-                              _backgroundColorBotomBar = color,
-                          backgroundColor: _backgroundColorBotomBar!,
-                          waterDropColor: _waterDropColor!,
-                          onSave: _saveChangesBotomBar,
-                        ),
-                      ),
-                    ],
-                  ),
+                  ],
                 ),
               ),
             ),

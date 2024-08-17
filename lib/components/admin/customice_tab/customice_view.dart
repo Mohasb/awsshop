@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:awsshop/models/theme_selection.dart';
 import 'package:awsshop/components/app_bar/app_bar_state.dart';
 import 'package:awsshop/components/botom_bar/botom_bar_customization.dart';
 import 'package:awsshop/components/botom_bar/bottom_bar_state.dart';
@@ -14,7 +15,8 @@ class CustomiceTab extends StatefulWidget {
   CustomiceTabState createState() => CustomiceTabState();
 }
 
-class CustomiceTabState extends State<CustomiceTab> with SingleTickerProviderStateMixin {
+class CustomiceTabState extends State<CustomiceTab>
+    with SingleTickerProviderStateMixin {
   late TextEditingController textController;
   late TextEditingController fontSizeController;
 
@@ -104,8 +106,9 @@ class CustomiceTabState extends State<CustomiceTab> with SingleTickerProviderSta
   }
 
   void _handleSaveAndClose(ExpansionTileController controller) {
-    _updateNavChanges(); // Update state
+     WidgetsBinding.instance.addPostFrameCallback((_) {
     controller.collapse(); // Collapse the ExpansionTile
+  });
   }
 
   @override
@@ -133,7 +136,7 @@ class CustomiceTabState extends State<CustomiceTab> with SingleTickerProviderSta
                   ],
                 ),
                 child: ExpansionTile(
-                  controller: _navController,
+                  controller: _navController, // Bind the controller
                   title: const Text(
                     'Personalización del Navbar',
                     style: TextStyle(
@@ -172,7 +175,8 @@ class CustomiceTabState extends State<CustomiceTab> with SingleTickerProviderSta
                           _fontSize = size;
                           _updateNavChanges(); // Update changes in real-time
                         }),
-                        onSave: () => _handleSaveAndClose(_navController),
+                        onSave: () => _handleSaveAndClose(
+                            _navController), // Simplified save
                       ),
                     ),
                   ],
@@ -197,7 +201,7 @@ class CustomiceTabState extends State<CustomiceTab> with SingleTickerProviderSta
                   ],
                 ),
                 child: ExpansionTile(
-                  controller: _drawerController,
+                  controller: _drawerController, // Bind the controller
                   title: const Text(
                     'Personalización del Drawer',
                     style: TextStyle(
@@ -224,7 +228,8 @@ class CustomiceTabState extends State<CustomiceTab> with SingleTickerProviderSta
                         }),
                         backgroundColor: _backgroundColorDrawer!,
                         textColor: _textColorDrawer!,
-                        onSave: () => _handleSaveAndClose(_drawerController),
+                        onSave: () => _handleSaveAndClose(
+                            _drawerController), // Simplified save
                       ),
                     ),
                   ],
@@ -249,7 +254,7 @@ class CustomiceTabState extends State<CustomiceTab> with SingleTickerProviderSta
                   ],
                 ),
                 child: ExpansionTile(
-                  controller: _bottomBarController,
+                  controller: _bottomBarController, // Bind the controller
                   title: const Text(
                     'Personalización del BotomBar',
                     style: TextStyle(
@@ -276,13 +281,15 @@ class CustomiceTabState extends State<CustomiceTab> with SingleTickerProviderSta
                         }),
                         backgroundColor: _backgroundColorBotomBar!,
                         waterDropColor: _waterDropColor!,
-                        onSave: () => _handleSaveAndClose(_bottomBarController),
+                        onSave: () => _handleSaveAndClose(
+                            _bottomBarController), // Simplified save
                       ),
                     ),
                   ],
                 ),
               ),
             ),
+            const ThemeSelection() // Asume que esta es la vista de selección de temas
           ],
         ),
       ),

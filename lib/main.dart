@@ -3,6 +3,7 @@ import 'package:awsshop/components/app_bar/app_bar_state.dart';
 import 'package:awsshop/components/botom_bar/botom_bar.dart';
 import 'package:awsshop/components/botom_bar/bottom_bar_state.dart';
 import 'package:awsshop/components/drawer/drawer_state.dart';
+import 'package:awsshop/models/theme_state.dart';
 import 'package:awsshop/services/utils/check_backend.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -13,13 +14,19 @@ import 'components/landing/landing.dart';
 import 'components/product_grid/product_grid.dart';
 
 void main() {
-
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AppBarState()),
-        ChangeNotifierProvider(create: (context) => DrawerState()),
-        ChangeNotifierProvider(create: (context) => BottomBarState()),
+        ChangeNotifierProvider(create: (context) => ThemeState()),
+        ProxyProvider<ThemeState, AppBarState>(
+          update: (context, themeState, appBarState) => AppBarState(themeState),
+        ),
+        ProxyProvider<ThemeState, DrawerState>(
+          update: (context, themeState, drawerState) => DrawerState(themeState),
+        ),
+        ProxyProvider<ThemeState, BottomBarState>(
+          update: (context, themeState, bottomBarState) => BottomBarState(themeState),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -31,20 +38,55 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'AWSSHOP',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        brightness: Brightness.light,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-      ),
-      themeMode: ThemeMode.system,
-      home: const HomePage(),
+    return Consumer<ThemeState>(
+      builder: (context, themeState, child) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => AppBarState(themeState)),
+            ChangeNotifierProvider(create: (context) => DrawerState(themeState)),
+            ChangeNotifierProvider(create: (context) => BottomBarState(themeState)),
+          ],
+          child: MaterialApp(
+            title: 'AWSSHOP',
+            theme: ThemeData(
+              brightness: Brightness.light,
+              appBarTheme: AppBarTheme(
+                backgroundColor: themeState.currentThemeMode == ThemeMode.light
+                    ? Colors.white
+                    : Colors.black,
+              ),
+              drawerTheme: DrawerThemeData(
+                backgroundColor: themeState.currentThemeMode == ThemeMode.light
+                    ? Colors.red
+                    : Colors.grey[850]!,
+              ),
+              bottomAppBarTheme: BottomAppBarTheme(
+                color: themeState.currentThemeMode == ThemeMode.light
+                    ? Colors.red
+                    : Colors.black,
+              ),
+            ),
+            darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              appBarTheme: const AppBarTheme(
+                backgroundColor: Colors.black,
+              ),
+              drawerTheme: DrawerThemeData(
+                backgroundColor: Colors.grey[850]!,
+              ),
+              bottomAppBarTheme: const BottomAppBarTheme(
+                color: Colors.black,
+              ),
+            ),
+            themeMode: themeState.currentThemeMode,
+            home: const HomePage(),
+          ),
+        );
+      },
     );
   }
 }
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

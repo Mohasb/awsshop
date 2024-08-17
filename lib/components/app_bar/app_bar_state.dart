@@ -1,16 +1,39 @@
+import 'package:awsshop/models/app_theme_default.dart';
+import 'package:awsshop/models/theme_state.dart';
 import 'package:flutter/material.dart';
 
 class AppBarState extends ChangeNotifier {
-  // Nav
-  Color _navTextColor = Colors.black;
-  double _navFontSize = 30;
-  Color _navBackgroundColor = Colors.white;
-  String _navText = 'Awsshop';
+  final ThemeState themeState;
 
+  AppBarState(this.themeState) {
+    themeState.addListener(_updateTheme);
+    _updateTheme(); // Inicializa con el tema correcto
+  }
+
+  Color _navTextColor = AppTheme.lightTheme['appBarTextColor'] as Color;
   Color get textColor => _navTextColor;
+
+  double _navFontSize = AppTheme.lightTheme['appBarFontSize'] as double;
   double get fontSize => _navFontSize;
+
+  Color _navBackgroundColor = AppTheme.lightTheme['appBarBackgroundColor'] as Color;
   Color get backgroundColor => _navBackgroundColor;
+
+  String _navText = AppTheme.lightTheme['appBarText'] as String;
   String get text => _navText;
+
+  void _updateTheme() {
+    final themeMap = themeState.currentThemeMode == ThemeMode.light
+        ? AppTheme.lightTheme
+        : AppTheme.darkTheme;
+
+    _navTextColor = themeMap['appBarTextColor'] as Color;
+    _navBackgroundColor = themeMap['appBarBackgroundColor'] as Color;
+    _navFontSize = themeMap['appBarFontSize'] as double;
+    _navText = themeMap['appBarText'] as String;
+
+    notifyListeners();
+  }
 
   void updateNavTextColor(Color color) {
     _navTextColor = color;
@@ -30,5 +53,11 @@ class AppBarState extends ChangeNotifier {
   void updateNavFontSize(double fontsize) {
     _navFontSize = fontsize;
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    themeState.removeListener(_updateTheme);
+    super.dispose();
   }
 }

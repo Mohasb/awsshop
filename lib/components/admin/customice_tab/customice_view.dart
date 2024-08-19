@@ -8,6 +8,9 @@ import 'package:awsshop/components/drawer/drawer_customization.dart';
 import 'package:awsshop/components/app_bar/nav_constumization.dart';
 import 'package:awsshop/components/drawer/drawer_state.dart';
 
+import 'theme/app_theme_default.dart';
+import 'theme/theme_state.dart';
+
 class CustomiceTab extends StatefulWidget {
   const CustomiceTab({super.key});
 
@@ -106,193 +109,181 @@ class CustomiceTabState extends State<CustomiceTab>
   }
 
   void _handleSaveAndClose(ExpansionTileController controller) {
-     WidgetsBinding.instance.addPostFrameCallback((_) {
-    controller.collapse(); 
-  });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.collapse();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final themeState = Provider.of<ThemeState>(context);
+    final theme = themeState.currentThemeMode == ThemeMode.light
+        ? AppTheme.lightTheme
+        : AppTheme.darkTheme;
+
+    final Color textColor = theme['appBarTextColor'] as Color;
+    final Color backgroundColor = theme['appBarBackgroundColor'] as Color;
+    final Color borderColor = theme['bottomBarWaterDropColor'] as Color;
+    final Color boxShadowColor = backgroundColor.withOpacity(0.5);
+    final Color expansionTileIconColor = textColor.withOpacity(0.8);
+    
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SingleChildScrollView(
         child: Column(
           children: [
             const SizedBox(height: 20),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.black, width: 2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: ExpansionTile(
-                  controller: _navController,
-                  title: const Text(
-                    'Personalización del Navbar',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  iconColor: Colors.blueAccent,
-                  collapsedIconColor: Colors.blueAccent,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: NavbarCustomization(
-                        textController: textController,
-                        fontSizeController: fontSizeController,
-                        initialTextColor: _textColor!,
-                        initialBackgroundColor: _backgroundColor!,
-                        initialText: _text!,
-                        initialFontSize: _fontSize!,
-                        onTextChange: (text) => setState(() {
-                          _text = text;
-                          _updateNavChanges(); 
-                        }),
-                        onTextColorChange: (color) => setState(() {
-                          _textColor = color;
-                          _updateNavChanges(); 
-                        }),
-                        onBackgroundColorChange: (color) => setState(() {
-                          _backgroundColor = color;
-                          _updateNavChanges(); 
-                        }),
-                        onFontSizeChange: (size) => setState(() {
-                          _fontSize = size;
-                          _updateNavChanges(); 
-                        }),
-                        onSave: () => _handleSaveAndClose(
-                            _navController),
-                      ),
-                    ),
-                  ],
-                ),
+            _buildCustomExpansionTile(
+              context,
+              'Personalización del Navbar',
+              NavbarCustomization(
+                textController: textController,
+                fontSizeController: fontSizeController,
+                initialTextColor: _textColor!,
+                initialBackgroundColor: _backgroundColor!,
+                initialText: _text!,
+                initialFontSize: _fontSize!,
+                onTextChange: (text) => setState(() {
+                  _text = text;
+                  _updateNavChanges();
+                }),
+                onTextColorChange: (color) => setState(() {
+                  _textColor = color;
+                  _updateNavChanges();
+                }),
+                onBackgroundColorChange: (color) => setState(() {
+                  _backgroundColor = color;
+                  _updateNavChanges();
+                }),
+                onFontSizeChange: (size) => setState(() {
+                  _fontSize = size;
+                  _updateNavChanges();
+                }),
+                onSave: () => _handleSaveAndClose(_navController),
               ),
+              _navController,
+              textColor,
+              backgroundColor,
+              borderColor,
+              boxShadowColor,
+              expansionTileIconColor,
             ),
             const SizedBox(height: 20),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.black, width: 2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: ExpansionTile(
-                  controller: _drawerController,
-                  title: const Text(
-                    'Personalización del Drawer',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  iconColor: Colors.blueAccent,
-                  collapsedIconColor: Colors.blueAccent,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: DrawerCustomization(
-                        onTextColorChange: (color) => setState(() {
-                          _textColorDrawer = color;
-                          _updateDrawerChanges();
-                        }),
-                        onBackgroundColorChange: (color) => setState(() {
-                          _backgroundColorDrawer = color;
-                          _updateDrawerChanges();
-                        }),
-                        backgroundColor: _backgroundColorDrawer!,
-                        textColor: _textColorDrawer!,
-                        onSave: () => _handleSaveAndClose(
-                            _drawerController), 
-                      ),
-                    ),
-                  ],
-                ),
+            _buildCustomExpansionTile(
+              context,
+              'Personalización del Drawer',
+              DrawerCustomization(
+                onTextColorChange: (color) => setState(() {
+                  _textColorDrawer = color;
+                  _updateDrawerChanges();
+                }),
+                onBackgroundColorChange: (color) => setState(() {
+                  _backgroundColorDrawer = color;
+                  _updateDrawerChanges();
+                }),
+                backgroundColor: _backgroundColorDrawer!,
+                textColor: _textColorDrawer!,
+                onSave: () => _handleSaveAndClose(_drawerController),
               ),
+              _drawerController,
+              textColor,
+              backgroundColor,
+              borderColor,
+              boxShadowColor,
+              expansionTileIconColor,
             ),
             const SizedBox(height: 20),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.black, width: 2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: ExpansionTile(
-                  controller: _bottomBarController, 
-                  title: const Text(
-                    'Personalización del BotomBar',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  iconColor: Colors.blueAccent,
-                  collapsedIconColor: Colors.blueAccent,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: BotomBarCustomization(
-                        onWaterDropColor: (color) => setState(() {
-                          _waterDropColor = color;
-                          _updateBotomBarChanges(); 
-                        }),
-                        onBackgroundColorChange: (color) => setState(() {
-                          _backgroundColorBotomBar = color;
-                          _updateBotomBarChanges(); 
-                        }),
-                        backgroundColor: _backgroundColorBotomBar!,
-                        waterDropColor: _waterDropColor!,
-                        onSave: () => _handleSaveAndClose(
-                            _bottomBarController), 
-                      ),
-                    ),
-                  ],
-                ),
+            _buildCustomExpansionTile(
+              context,
+              'Personalización del BotomBar',
+              BotomBarCustomization(
+                onWaterDropColor: (color) => setState(() {
+                  _waterDropColor = color;
+                  _updateBotomBarChanges();
+                }),
+                onBackgroundColorChange: (color) => setState(() {
+                  _backgroundColorBotomBar = color;
+                  _updateBotomBarChanges();
+                }),
+                backgroundColor: _backgroundColorBotomBar!,
+                waterDropColor: _waterDropColor!,
+                onSave: () => _handleSaveAndClose(_bottomBarController),
               ),
+              _bottomBarController,
+              textColor,
+              backgroundColor,
+              borderColor,
+              boxShadowColor,
+              expansionTileIconColor,
             ),
-            const ThemeSelection()
+            const ThemeSelection(),
           ],
         ),
       ),
     );
   }
+
+  Widget _buildCustomExpansionTile(
+  BuildContext context,
+  String title,
+  Widget child,
+  ExpansionTileController controller,
+  Color textColor,
+  Color backgroundColor,
+  Color borderColor,
+  Color boxShadowColor,
+  Color iconColor,
+) {
+  return ClipRRect(
+    borderRadius: BorderRadius.circular(10),
+    child: Container(
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: borderColor, width: 2),
+        boxShadow: [
+          BoxShadow(
+            color: boxShadowColor,
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: ExpansionTile(
+        controller: controller,
+        title: Text(
+          title,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: textColor,
+          ),
+        ),
+        iconColor: iconColor,
+        collapsedIconColor: iconColor,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                textTheme: TextTheme(
+                  bodyMedium: TextStyle(color: textColor),
+                ),
+                colorScheme: ColorScheme.fromSwatch().copyWith(
+                  primary: textColor,
+                  secondary: backgroundColor,
+                ),
+              ),
+              child: child, 
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
 }

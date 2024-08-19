@@ -1,3 +1,4 @@
+import 'package:awsshop/components/utils_comp/horizontal_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
@@ -52,8 +53,12 @@ class BotomBarCustomizationState extends State<BotomBarCustomization> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 20),
+          HorizontalLine(
+            height: 10,
+            label: "COLOR DE GOTA",
+            textColor: textColor,
+          ),
           _buildColorPicker(
-            label: 'Color de gota:',
             currentColor: _waterDropColor,
             backgroundColor: backgroundColor,
             textColor: textColor,
@@ -65,8 +70,12 @@ class BotomBarCustomizationState extends State<BotomBarCustomization> {
             },
           ),
           const SizedBox(height: 20),
+          HorizontalLine(
+            height: 10,
+            label: "COLOR DE FONDO",
+            textColor: textColor,
+          ),
           _buildColorPicker(
-            label: 'Color de Fondo:',
             currentColor: _backgroundColor,
             backgroundColor: backgroundColor,
             textColor: textColor,
@@ -105,7 +114,6 @@ class BotomBarCustomizationState extends State<BotomBarCustomization> {
   }
 
   Widget _buildColorPicker({
-    required String label,
     required Color currentColor,
     required Color backgroundColor,
     required Color textColor,
@@ -129,11 +137,6 @@ class BotomBarCustomizationState extends State<BotomBarCustomization> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            label,
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: textColor),
-          ),
           ColorPicker(
             pickerColor: currentColor,
             paletteType: PaletteType.hueWheel,
@@ -149,3 +152,5 @@ class BotomBarCustomizationState extends State<BotomBarCustomization> {
     );
   }
 }
+
+

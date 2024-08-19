@@ -8,6 +8,9 @@ import 'package:awsshop/components/drawer/drawer_state.dart';
 class ThemeSelection extends StatelessWidget {
   const ThemeSelection({super.key});
 
+
+  int colorToInt(Color color) => color.value;
+  Color intToColor(int value) => Color(value);
   // Función para aplicar el tema seleccionado
   void _applySelectedTheme(BuildContext context, Map<dynamic, dynamic> selectedTheme) {
     final appBarState = Provider.of<AppBarState>(context, listen: false);
@@ -15,30 +18,30 @@ class ThemeSelection extends StatelessWidget {
     final bottomBarState = Provider.of<BottomBarState>(context, listen: false);
 
     appBarState.updateNavTextColor(
-      selectedTheme['appBarTextColor'] as Color
+      selectedTheme['appBarTextColor']
     );
     appBarState.updateNavFontSize(
       (selectedTheme['appBarFontSize'] as num).toDouble()
     );
     appBarState.updateNavBackgroundColor(
-      selectedTheme['appBarBackgroundColor'] as Color
+      selectedTheme['appBarBackgroundColor']
     );
     appBarState.updateNavText(
       selectedTheme['appBarText'] as String
     );
 
     drawerState.updateDrawerTextColor(
-      selectedTheme['drawerTextColor'] as Color
+      selectedTheme['drawerTextColor']
     );
     drawerState.updateDrawerBackgroundColor(
-      selectedTheme['drawerBackgroundColor'] as Color
+      selectedTheme['drawerBackgroundColor']
     );
 
     bottomBarState.updateBgColorBottomBar(
-      selectedTheme['bottomBarBgColor'] as Color
+      selectedTheme['bottomBarBgColor']
     );
     bottomBarState.updatecolorWaterDropBottomBar(
-      selectedTheme['bottomBarWaterDropColor'] as Color
+      selectedTheme['bottomBarWaterDropColor']
     );
   }
 

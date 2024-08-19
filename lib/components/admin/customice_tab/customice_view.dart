@@ -77,20 +77,30 @@ class CustomiceTabState extends State<CustomiceTab>
     final appBarState = Provider.of<AppBarState>(context, listen: false);
     if (_text != null) appBarState.updateNavText(_text!);
     if (_textColor != null) appBarState.updateNavTextColor(_textColor!);
-    if (_backgroundColor != null) appBarState.updateNavBackgroundColor(_backgroundColor!);
+    if (_backgroundColor != null) {
+      appBarState.updateNavBackgroundColor(_backgroundColor!);
+    }
     if (_fontSize != null) appBarState.updateNavFontSize(_fontSize!);
   }
 
   void _updateDrawerChanges() {
     final drawerState = Provider.of<DrawerState>(context, listen: false);
-    if (_textColorDrawer != null) drawerState.updateDrawerTextColor(_textColorDrawer!);
-    if (_backgroundColorDrawer != null) drawerState.updateDrawerBackgroundColor(_backgroundColorDrawer!);
+    if (_textColorDrawer != null) {
+      drawerState.updateDrawerTextColor(_textColorDrawer!);
+    }
+    if (_backgroundColorDrawer != null) {
+      drawerState.updateDrawerBackgroundColor(_backgroundColorDrawer!);
+    }
   }
 
   void _updateBotomBarChanges() {
     final botomBarState = Provider.of<BottomBarState>(context, listen: false);
-    if (_waterDropColor != null) botomBarState.updatecolorWaterDropBottomBar(_waterDropColor!);
-    if (_backgroundColorBotomBar != null) botomBarState.updateBgColorBottomBar(_backgroundColorBotomBar!);
+    if (_waterDropColor != null) {
+      botomBarState.updatecolorWaterDropBottomBar(_waterDropColor!);
+    }
+    if (_backgroundColorBotomBar != null) {
+      botomBarState.updateBgColorBottomBar(_backgroundColorBotomBar!);
+    }
   }
 
   void _handleSaveAndClose(ExpansionTileController controller) {
@@ -223,9 +233,25 @@ class CustomiceTabState extends State<CustomiceTab>
             ElevatedButton(
               onPressed: _saveCurrentThemeAsNew,
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                backgroundColor: backgroundColor,
+                foregroundColor: textColor,
+                shadowColor: boxShadowColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  side: BorderSide(
+                    color: borderColor,
+                    width: 2,
+                  ),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
               ),
-              child: const Text('Guardar Tema Actual'),
+              child: Text(
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                      color: textColor),
+                  'Guardar Tema Actual'),
             ),
             const SizedBox(height: 20),
             const ThemeSelection(),

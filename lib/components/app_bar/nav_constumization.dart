@@ -10,11 +10,13 @@ class NavbarCustomization extends StatefulWidget {
   final TextEditingController fontSizeController;
   final Color initialTextColor;
   final Color initialBackgroundColor;
+  final Color initialIconsColor;
   final String initialText;
   final double initialFontSize;
   final Function(String text) onTextChange;
   final Function(Color textColor) onTextColorChange;
   final Function(Color backgroundColor) onBackgroundColorChange;
+  final Function(Color iconsColor) onIconsColorChange;
   final Function(double fontSize) onFontSizeChange;
   final VoidCallback onSave;
 
@@ -29,8 +31,10 @@ class NavbarCustomization extends StatefulWidget {
     required this.onTextChange,
     required this.onTextColorChange,
     required this.onBackgroundColorChange,
+    required this.onIconsColorChange,
     required this.onFontSizeChange,
     required this.onSave,
+    required this.initialIconsColor,
   });
 
   @override
@@ -40,12 +44,14 @@ class NavbarCustomization extends StatefulWidget {
 class NavbarCustomizationState extends State<NavbarCustomization> {
   late Color _textColor;
   late Color _backgroundColor;
+  late Color _iconsColor;
 
   @override
   void initState() {
     super.initState();
     _textColor = widget.initialTextColor;
     _backgroundColor = widget.initialBackgroundColor;
+    _iconsColor = widget.initialIconsColor;
   }
 
   @override
@@ -129,6 +135,19 @@ class NavbarCustomizationState extends State<NavbarCustomization> {
                 _backgroundColor = color;
               });
               widget.onBackgroundColorChange(color);
+            },
+          ),
+          const SizedBox(height: 20),
+          _buildColorPicker(
+            label: 'Color de Iconos:',
+            currentColor: _iconsColor,
+            backgroundColor: backgroundColor,
+            textColor: textColor,
+            onColorChanged: (color) {
+              setState(() {
+                _iconsColor = color;
+              });
+              widget.onIconsColorChange(color);
             },
           ),
           const SizedBox(height: 20),

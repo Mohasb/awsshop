@@ -33,6 +33,7 @@ class CustomiceTabState extends State<CustomiceTab>
   Color? _backgroundColorDrawer;
   Color? _waterDropColor;
   Color? _backgroundColorBotomBar;
+  Color? _iconColor;
 
   late final ExpansionTileController _navController;
   late final ExpansionTileController _drawerController;
@@ -47,12 +48,12 @@ class CustomiceTabState extends State<CustomiceTab>
 
     // Inicialización de variables
     textController = TextEditingController(text: appBarState.text);
-    fontSizeController =
-        TextEditingController(text: appBarState.fontSize.toString());
+    fontSizeController = TextEditingController(text: appBarState.fontSize.toString());
     _textColor = appBarState.textColor;
     _backgroundColor = appBarState.backgroundColor;
     _text = appBarState.text;
     _fontSize = appBarState.fontSize;
+    _iconColor = appBarState.iconsColor;
 
     _textColorDrawer = drawerState.textColorDrawer;
     _backgroundColorDrawer = drawerState.backgroundColorDrawer;
@@ -81,6 +82,7 @@ class CustomiceTabState extends State<CustomiceTab>
       appBarState.updateNavBackgroundColor(_backgroundColor!);
     }
     if (_fontSize != null) appBarState.updateNavFontSize(_fontSize!);
+    if (_iconColor != null) appBarState.updateNavIconColor(_iconColor!);
   }
 
   void _updateDrawerChanges() {
@@ -112,6 +114,7 @@ class CustomiceTabState extends State<CustomiceTab>
   void _saveCurrentThemeAsNew() {
     final themeToSave = {
       'appBarTextColor': _textColor,
+      'appBarIconColor': _iconColor,
       'appBarFontSize': _fontSize,
       'appBarBackgroundColor': _backgroundColor,
       'appBarText': _text,
@@ -156,6 +159,7 @@ class CustomiceTabState extends State<CustomiceTab>
                 initialBackgroundColor: _backgroundColor!,
                 initialText: _text!,
                 initialFontSize: _fontSize!,
+                initialIconsColor: _iconColor!,
                 onTextChange: (text) => setState(() {
                   _text = text;
                   _updateNavChanges();
@@ -172,7 +176,11 @@ class CustomiceTabState extends State<CustomiceTab>
                   _fontSize = size;
                   _updateNavChanges();
                 }),
-                onSave: () => _handleSaveAndClose(_navController),
+                onIconsColorChange: (Color color) { 
+                  _iconColor = color;
+                  _updateNavChanges();
+                 },
+                onSave: () => _handleSaveAndClose(_navController), 
               ),
               _navController,
               textColor,

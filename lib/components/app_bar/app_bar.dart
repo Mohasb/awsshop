@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AwsomeShopAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color textColor;
   final Color backgroundColor;
+  final Color iconColor;
   final String text;
   final double fontSize;
   final bool isAdmin;
@@ -12,6 +13,7 @@ class AwsomeShopAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     required this.textColor,
     required this.backgroundColor,
+    required this.iconColor,
     required this.text,
     required this.fontSize,
     required this.isAdmin,
@@ -35,7 +37,7 @@ class AwsomeShopAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: backgroundColor,
       leading: IconButton(
         icon: const Icon(Icons.menu),
-        color: textColor,
+        color: iconColor,
         onPressed: () {
           Scaffold.of(context).openDrawer();
         },
@@ -44,12 +46,12 @@ class AwsomeShopAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           onPressed: () => {},
           icon: const Icon(Icons.account_circle_rounded),
-          color: textColor,
+          color: iconColor,
         ),
         if (isAdmin) ...[
           IconButton(
               icon: const Icon(Icons.edit),
-              color: textColor,
+              color: iconColor,
               onPressed: onAdminIconPressed),
         ],
       ],

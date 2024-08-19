@@ -180,6 +180,7 @@ bool _showAdminView = false;
     return AwsomeShopAppBar(
       textColor: appBarState.textColor,
       backgroundColor: appBarState.backgroundColor,
+      iconColor: appBarState.iconsColor,
       fontSize: appBarState.fontSize,
       text: appBarState.text,
       isAdmin: true,

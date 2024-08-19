@@ -9,41 +9,74 @@ class ThemeSelection extends StatelessWidget {
   const ThemeSelection({super.key});
 
 
-  int colorToInt(Color color) => color.value;
-  Color intToColor(int value) => Color(value);
-  // Función para aplicar el tema seleccionado
-  void _applySelectedTheme(BuildContext context, Map<dynamic, dynamic> selectedTheme) {
-    final appBarState = Provider.of<AppBarState>(context, listen: false);
-    final drawerState = Provider.of<DrawerState>(context, listen: false);
-    final bottomBarState = Provider.of<BottomBarState>(context, listen: false);
+// Función para convertir int a Color
+Color intToColor(int value) => Color(value);
 
-    appBarState.updateNavTextColor(
-      selectedTheme['appBarTextColor']
-    );
-    appBarState.updateNavFontSize(
-      (selectedTheme['appBarFontSize'] as num).toDouble()
-    );
-    appBarState.updateNavBackgroundColor(
-      selectedTheme['appBarBackgroundColor']
-    );
-    appBarState.updateNavText(
-      selectedTheme['appBarText'] as String
-    );
+// Función para aplicar el tema seleccionado
+void _applySelectedTheme(BuildContext context, Map<dynamic, dynamic> selectedTheme) {
+  final appBarState = Provider.of<AppBarState>(context, listen: false);
+  final drawerState = Provider.of<DrawerState>(context, listen: false);
+  final bottomBarState = Provider.of<BottomBarState>(context, listen: false);
 
-    drawerState.updateDrawerTextColor(
-      selectedTheme['drawerTextColor']
-    );
-    drawerState.updateDrawerBackgroundColor(
-      selectedTheme['drawerBackgroundColor']
-    );
+  // Verifica y convierte 'appBarTextColor'
+  appBarState.updateNavTextColor(
+    selectedTheme['appBarTextColor'] is int
+        ? intToColor(selectedTheme['appBarTextColor'] as int)
+        : selectedTheme['appBarTextColor'] as Color,
+  );
 
-    bottomBarState.updateBgColorBottomBar(
-      selectedTheme['bottomBarBgColor']
-    );
-    bottomBarState.updatecolorWaterDropBottomBar(
-      selectedTheme['bottomBarWaterDropColor']
-    );
-  }
+  // Manejo de 'appBarFontSize'
+  appBarState.updateNavFontSize(
+    (selectedTheme['appBarFontSize'] as num).toDouble(),
+  );
+
+  // Verifica y convierte 'appBarBackgroundColor'
+  appBarState.updateNavBackgroundColor(
+    selectedTheme['appBarBackgroundColor'] is int
+        ? intToColor(selectedTheme['appBarBackgroundColor'] as int)
+        : selectedTheme['appBarBackgroundColor'] as Color,
+  );
+
+  // Verifica y convierte 'appBarIconColor'
+  appBarState.updateNavIconColor(
+    selectedTheme['appBarIconColor'] is int
+        ? intToColor(selectedTheme['appBarIconColor'] as int)
+        : selectedTheme['appBarIconColor'] as Color,
+  );
+
+  // Manejo de 'appBarText'
+  appBarState.updateNavText(
+    selectedTheme['appBarText'] as String,
+  );
+
+  // Verifica y convierte 'drawerTextColor'
+  drawerState.updateDrawerTextColor(
+    selectedTheme['drawerTextColor'] is int
+        ? intToColor(selectedTheme['drawerTextColor'] as int)
+        : selectedTheme['drawerTextColor'] as Color,
+  );
+
+  // Verifica y convierte 'drawerBackgroundColor'
+  drawerState.updateDrawerBackgroundColor(
+    selectedTheme['drawerBackgroundColor'] is int
+        ? intToColor(selectedTheme['drawerBackgroundColor'] as int)
+        : selectedTheme['drawerBackgroundColor'] as Color,
+  );
+
+  // Verifica y convierte 'bottomBarBgColor'
+  bottomBarState.updateBgColorBottomBar(
+    selectedTheme['bottomBarBgColor'] is int
+        ? intToColor(selectedTheme['bottomBarBgColor'] as int)
+        : selectedTheme['bottomBarBgColor'] as Color,
+  );
+
+  // Verifica y convierte 'bottomBarWaterDropColor'
+  bottomBarState.updatecolorWaterDropBottomBar(
+    selectedTheme['bottomBarWaterDropColor'] is int
+        ? intToColor(selectedTheme['bottomBarWaterDropColor'] as int)
+        : selectedTheme['bottomBarWaterDropColor'] as Color,
+  );
+}
 
   @override
   Widget build(BuildContext context) {

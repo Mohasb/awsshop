@@ -11,16 +11,16 @@ class AppBarState extends ChangeNotifier {
   }
 
   Color _navTextColor = AppTheme.lightTheme['appBarTextColor'] as Color;
-  Color get textColor => _navTextColor;
-
   double _navFontSize = AppTheme.lightTheme['appBarFontSize'] as double;
-  double get fontSize => _navFontSize;
-
   Color _navBackgroundColor = AppTheme.lightTheme['appBarBackgroundColor'] as Color;
-  Color get backgroundColor => _navBackgroundColor;
-
   String _navText = AppTheme.lightTheme['appBarText'] as String;
+  Color _iconsColor = AppTheme.lightTheme['appBarIconColor'] as Color;
+
+  Color get textColor => _navTextColor;
+  double get fontSize => _navFontSize;
+  Color get backgroundColor => _navBackgroundColor;
   String get text => _navText;
+  Color get iconsColor => _iconsColor;
 
   void _updateTheme() {
     final themeMap = themeState.currentThemeMode == ThemeMode.light
@@ -31,7 +31,13 @@ class AppBarState extends ChangeNotifier {
     _navBackgroundColor = themeMap['appBarBackgroundColor'] as Color;
     _navFontSize = themeMap['appBarFontSize'] as double;
     _navText = themeMap['appBarText'] as String;
+    _iconsColor = themeMap['appBarIconColor'] as Color;
 
+    notifyListeners();
+  }
+
+  void updateNavIconColor(Color color) {
+    _iconsColor = color;
     notifyListeners();
   }
 

@@ -14,16 +14,32 @@ class ThemeSelection extends StatelessWidget {
     final drawerState = Provider.of<DrawerState>(context, listen: false);
     final bottomBarState = Provider.of<BottomBarState>(context, listen: false);
 
-    appBarState.updateNavTextColor(selectedTheme['appBarTextColor']);
-    appBarState.updateNavFontSize(selectedTheme['appBarFontSize']);
-    appBarState.updateNavBackgroundColor(selectedTheme['appBarBackgroundColor']);
-    appBarState.updateNavText(selectedTheme['appBarText']);
+    appBarState.updateNavTextColor(
+      selectedTheme['appBarTextColor'] as Color
+    );
+    appBarState.updateNavFontSize(
+      (selectedTheme['appBarFontSize'] as num).toDouble()
+    );
+    appBarState.updateNavBackgroundColor(
+      selectedTheme['appBarBackgroundColor'] as Color
+    );
+    appBarState.updateNavText(
+      selectedTheme['appBarText'] as String
+    );
 
-    drawerState.updateDrawerTextColor(selectedTheme['drawerTextColor']);
-    drawerState.updateDrawerBackgroundColor(selectedTheme['drawerBackgroundColor']);
+    drawerState.updateDrawerTextColor(
+      selectedTheme['drawerTextColor'] as Color
+    );
+    drawerState.updateDrawerBackgroundColor(
+      selectedTheme['drawerBackgroundColor'] as Color
+    );
 
-    bottomBarState.updateBgColorBottomBar(selectedTheme['bottomBarBgColor']);
-    bottomBarState.updatecolorWaterDropBottomBar(selectedTheme['bottomBarWaterDropColor']);
+    bottomBarState.updateBgColorBottomBar(
+      selectedTheme['bottomBarBgColor'] as Color
+    );
+    bottomBarState.updatecolorWaterDropBottomBar(
+      selectedTheme['bottomBarWaterDropColor'] as Color
+    );
   }
 
   @override
@@ -64,8 +80,6 @@ class ThemeSelection extends StatelessWidget {
             return ListTile(
               title: Text(themeData['name']),
               onTap: () {
-                print("THEME");
-                print(themeData['theme']);
                 _applySelectedTheme(context, themeData['theme']);
               },
               trailing: IconButton(

@@ -44,7 +44,6 @@ class DrawerCustomizationState extends State<DrawerCustomization> {
 
     final Color textColor = theme['appBarTextColor'] as Color;
     final Color backgroundColor = theme['appBarBackgroundColor'] as Color;
-    final Color borderColor = theme['bottomBarWaterDropColor'] as Color;
 
     return Padding(
       padding: const EdgeInsets.all(4.0),

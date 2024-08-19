@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:awsshop/components/admin/customice_tab/theme/app_theme_default.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -77,7 +78,9 @@ class ThemeState extends ChangeNotifier {
     }).toList();
     await prefs.setStringList('savedThemes', themeList);
   } catch (e) {
-    print("Error saving themes: $e");
+    if (kDebugMode) {
+      print("Error saving themes: $e");
+    }
   }
 }
 
@@ -103,7 +106,9 @@ class ThemeState extends ChangeNotifier {
       }).toList();
       notifyListeners();
     } catch (e) {
-      print("Error loading themes: $e");
+      if (kDebugMode) {
+        print("Error loading themes: $e");
+      }
     }
   }
 

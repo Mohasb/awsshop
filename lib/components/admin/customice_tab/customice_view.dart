@@ -24,17 +24,13 @@ class CustomiceTabState extends State<CustomiceTab>
   late TextEditingController textController;
   late TextEditingController fontSizeController;
 
-  // Nav
+  // Variables de personalización
   Color? _textColor;
   Color? _backgroundColor;
   String? _text;
   double? _fontSize;
-
-  // Drawer
   Color? _textColorDrawer;
   Color? _backgroundColorDrawer;
-
-  // BotomBar
   Color? _waterDropColor;
   Color? _backgroundColorBotomBar;
 
@@ -49,7 +45,7 @@ class CustomiceTabState extends State<CustomiceTab>
     final botomBarState = Provider.of<BottomBarState>(context, listen: false);
     final drawerState = Provider.of<DrawerState>(context, listen: false);
 
-    // Variables Nav
+    // Inicialización de variables
     textController = TextEditingController(text: appBarState.text);
     fontSizeController =
         TextEditingController(text: appBarState.fontSize.toString());
@@ -58,15 +54,13 @@ class CustomiceTabState extends State<CustomiceTab>
     _text = appBarState.text;
     _fontSize = appBarState.fontSize;
 
-    // Variables Drawer
-    _backgroundColorDrawer = drawerState.backgroundColorDrawer;
     _textColorDrawer = drawerState.textColorDrawer;
+    _backgroundColorDrawer = drawerState.backgroundColorDrawer;
 
-    // Variables BotomBar
     _waterDropColor = botomBarState.colorWaterDropBottomBar;
     _backgroundColorBotomBar = botomBarState.bgColorBottomBar;
 
-    // Initialize controllers
+    // Controladores de expansión
     _navController = ExpansionTileController();
     _drawerController = ExpansionTileController();
     _bottomBarController = ExpansionTileController();
@@ -83,30 +77,20 @@ class CustomiceTabState extends State<CustomiceTab>
     final appBarState = Provider.of<AppBarState>(context, listen: false);
     if (_text != null) appBarState.updateNavText(_text!);
     if (_textColor != null) appBarState.updateNavTextColor(_textColor!);
-    if (_backgroundColor != null) {
-      appBarState.updateNavBackgroundColor(_backgroundColor!);
-    }
+    if (_backgroundColor != null) appBarState.updateNavBackgroundColor(_backgroundColor!);
     if (_fontSize != null) appBarState.updateNavFontSize(_fontSize!);
   }
 
   void _updateDrawerChanges() {
     final drawerState = Provider.of<DrawerState>(context, listen: false);
-    if (_textColorDrawer != null) {
-      drawerState.updateDrawerTextColor(_textColorDrawer!);
-    }
-    if (_backgroundColorDrawer != null) {
-      drawerState.updateDrawerBackgroundColor(_backgroundColorDrawer!);
-    }
+    if (_textColorDrawer != null) drawerState.updateDrawerTextColor(_textColorDrawer!);
+    if (_backgroundColorDrawer != null) drawerState.updateDrawerBackgroundColor(_backgroundColorDrawer!);
   }
 
   void _updateBotomBarChanges() {
     final botomBarState = Provider.of<BottomBarState>(context, listen: false);
-    if (_waterDropColor != null) {
-      botomBarState.updatecolorWaterDropBottomBar(_waterDropColor!);
-    }
-    if (_backgroundColorBotomBar != null) {
-      botomBarState.updateBgColorBottomBar(_backgroundColorBotomBar!);
-    }
+    if (_waterDropColor != null) botomBarState.updatecolorWaterDropBottomBar(_waterDropColor!);
+    if (_backgroundColorBotomBar != null) botomBarState.updateBgColorBottomBar(_backgroundColorBotomBar!);
   }
 
   void _handleSaveAndClose(ExpansionTileController controller) {
@@ -147,7 +131,7 @@ class CustomiceTabState extends State<CustomiceTab>
     final Color expansionTileIconColor = textColor.withOpacity(0.8);
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -214,7 +198,7 @@ class CustomiceTabState extends State<CustomiceTab>
             const SizedBox(height: 20),
             _buildCustomExpansionTile(
               context,
-              'Personalización del BotomBar',
+              'Personalización del BottomBar',
               BotomBarCustomization(
                 onWaterDropColor: (color) => setState(() {
                   _waterDropColor = color;
@@ -235,10 +219,15 @@ class CustomiceTabState extends State<CustomiceTab>
               boxShadowColor,
               expansionTileIconColor,
             ),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _saveCurrentThemeAsNew,
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+              ),
               child: const Text('Guardar Tema Actual'),
             ),
+            const SizedBox(height: 20),
             const ThemeSelection(),
           ],
         ),
@@ -258,18 +247,18 @@ class CustomiceTabState extends State<CustomiceTab>
     Color iconColor,
   ) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(12),
       child: Container(
         decoration: BoxDecoration(
           color: backgroundColor,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: borderColor, width: 2),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: borderColor, width: 1.5),
           boxShadow: [
             BoxShadow(
               color: boxShadowColor,
               spreadRadius: 2,
-              blurRadius: 5,
-              offset: const Offset(0, 3),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
             ),
           ],
         ),
@@ -278,7 +267,7 @@ class CustomiceTabState extends State<CustomiceTab>
           title: Text(
             title,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
               color: textColor,
             ),
@@ -289,7 +278,7 @@ class CustomiceTabState extends State<CustomiceTab>
             Container(
               decoration: BoxDecoration(
                 color: backgroundColor,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Theme(
                 data: Theme.of(context).copyWith(

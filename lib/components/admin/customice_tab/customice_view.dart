@@ -1,3 +1,4 @@
+import 'package:awsshop/components/admin/customice_tab/theme/save_theme_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:awsshop/components/admin/customice_tab/theme/theme_selection.dart';
@@ -114,6 +115,24 @@ class CustomiceTabState extends State<CustomiceTab>
     });
   }
 
+  void _saveCurrentThemeAsNew() {
+    final themeToSave = {
+      'appBarTextColor': _textColor,
+      'appBarFontSize': _fontSize,
+      'appBarBackgroundColor': _backgroundColor,
+      'appBarText': _text,
+      'drawerTextColor': _textColorDrawer,
+      'drawerBackgroundColor': _backgroundColorDrawer,
+      'bottomBarBgColor': _backgroundColorBotomBar,
+      'bottomBarWaterDropColor': _waterDropColor,
+    };
+
+    showDialog(
+      context: context,
+      builder: (context) => SaveThemeDialog(themeToSave: themeToSave),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeState = Provider.of<ThemeState>(context);
@@ -126,7 +145,7 @@ class CustomiceTabState extends State<CustomiceTab>
     final Color borderColor = theme['bottomBarWaterDropColor'] as Color;
     final Color boxShadowColor = backgroundColor.withOpacity(0.5);
     final Color expansionTileIconColor = textColor.withOpacity(0.8);
-    
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SingleChildScrollView(
@@ -216,6 +235,10 @@ class CustomiceTabState extends State<CustomiceTab>
               boxShadowColor,
               expansionTileIconColor,
             ),
+            ElevatedButton(
+              onPressed: _saveCurrentThemeAsNew,
+              child: const Text('Guardar Tema Actual'),
+            ),
             const ThemeSelection(),
           ],
         ),
@@ -224,66 +247,66 @@ class CustomiceTabState extends State<CustomiceTab>
   }
 
   Widget _buildCustomExpansionTile(
-  BuildContext context,
-  String title,
-  Widget child,
-  ExpansionTileController controller,
-  Color textColor,
-  Color backgroundColor,
-  Color borderColor,
-  Color boxShadowColor,
-  Color iconColor,
-) {
-  return ClipRRect(
-    borderRadius: BorderRadius.circular(10),
-    child: Container(
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: borderColor, width: 2),
-        boxShadow: [
-          BoxShadow(
-            color: boxShadowColor,
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: ExpansionTile(
-        controller: controller,
-        title: Text(
-          title,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: textColor,
-          ),
+    BuildContext context,
+    String title,
+    Widget child,
+    ExpansionTileController controller,
+    Color textColor,
+    Color backgroundColor,
+    Color borderColor,
+    Color boxShadowColor,
+    Color iconColor,
+  ) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: borderColor, width: 2),
+          boxShadow: [
+            BoxShadow(
+              color: boxShadowColor,
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
+            ),
+          ],
         ),
-        iconColor: iconColor,
-        collapsedIconColor: iconColor,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: backgroundColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Theme(
-              data: Theme.of(context).copyWith(
-                textTheme: TextTheme(
-                  bodyMedium: TextStyle(color: textColor),
-                ),
-                colorScheme: ColorScheme.fromSwatch().copyWith(
-                  primary: textColor,
-                  secondary: backgroundColor,
-                ),
-              ),
-              child: child, 
+        child: ExpansionTile(
+          controller: controller,
+          title: Text(
+            title,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: textColor,
             ),
           ),
-        ],
+          iconColor: iconColor,
+          collapsedIconColor: iconColor,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  textTheme: TextTheme(
+                    bodyMedium: TextStyle(color: textColor),
+                  ),
+                  colorScheme: ColorScheme.fromSwatch().copyWith(
+                    primary: textColor,
+                    secondary: backgroundColor,
+                  ),
+                ),
+                child: child,
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 }

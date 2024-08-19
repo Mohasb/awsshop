@@ -1,12 +1,35 @@
-import 'package:awsshop/components/admin/customice_tab/theme/theme_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:awsshop/components/admin/customice_tab/theme/theme_state.dart';
+import 'package:awsshop/components/app_bar/app_bar_state.dart';
+import 'package:awsshop/components/botom_bar/bottom_bar_state.dart';
+import 'package:awsshop/components/drawer/drawer_state.dart';
 
 class ThemeSelection extends StatelessWidget {
   const ThemeSelection({super.key});
 
+  // Función para aplicar el tema seleccionado
+  void _applySelectedTheme(BuildContext context, Map<dynamic, dynamic> selectedTheme) {
+    final appBarState = Provider.of<AppBarState>(context, listen: false);
+    final drawerState = Provider.of<DrawerState>(context, listen: false);
+    final bottomBarState = Provider.of<BottomBarState>(context, listen: false);
+
+    appBarState.updateNavTextColor(selectedTheme['appBarTextColor']);
+    appBarState.updateNavFontSize(selectedTheme['appBarFontSize']);
+    appBarState.updateNavBackgroundColor(selectedTheme['appBarBackgroundColor']);
+    appBarState.updateNavText(selectedTheme['appBarText']);
+
+    drawerState.updateDrawerTextColor(selectedTheme['drawerTextColor']);
+    drawerState.updateDrawerBackgroundColor(selectedTheme['drawerBackgroundColor']);
+
+    bottomBarState.updateBgColorBottomBar(selectedTheme['bottomBarBgColor']);
+    bottomBarState.updatecolorWaterDropBottomBar(selectedTheme['bottomBarWaterDropColor']);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final themeState = Provider.of<ThemeState>(context);
+
     return Container(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -20,15 +43,39 @@ class ThemeSelection extends StatelessWidget {
           ListTile(
             title: const Text('Tema Claro'),
             onTap: () {
-              Provider.of<ThemeState>(context, listen: false).updateTheme(ThemeMode.light);
+              Provider.of<ThemeState>(context, listen: false)
+                  .updateTheme(ThemeMode.light);
             },
           ),
           ListTile(
             title: const Text('Tema Oscuro'),
             onTap: () {
-              Provider.of<ThemeState>(context, listen: false).updateTheme(ThemeMode.dark);
+              Provider.of<ThemeState>(context, listen: false)
+                  .updateTheme(ThemeMode.dark);
             },
           ),
+          const SizedBox(height: 16),
+          Text(
+            'Temas Guardados',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          const SizedBox(height: 8),
+          ...themeState.savedThemes.map((themeData) {
+            return ListTile(
+              title: Text(themeData['name']),
+              onTap: () {
+                print("THEME");
+                print(themeData['theme']);
+                _applySelectedTheme(context, themeData['theme']);
+              },
+              trailing: IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () {
+                  themeState.deleteTheme(themeData['name']);
+                },
+              ),
+            );
+          }),
         ],
       ),
     );
